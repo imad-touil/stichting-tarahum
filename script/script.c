@@ -3,7 +3,6 @@
 #include <string.h>
 #include <pcsclite.h>
 
-
 int main() {
     SCARDCONTEXT hContext;
     SCARDHANDLE hCard;
