@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../dist/output.css" rel="stylesheet">
+    <link href="./dist/output.css" rel="stylesheet">
     <title>Stichting Tarahum</title>
 </head>
 <body class="py-2">
-    <h1 class="text-3xl font-bold underline text-blue-600">
-        Hello Tailwind CSS!
-    </h1>
-    <p class="mt-4 text-gray-600">Your Tailwind setup is working!</p>
-    <div class="bg-gray-100 p-8 rounded-lg shadow-md max-w-md mx-auto mt-10">
-    <h1 class="text-3xl font-bold underline text-blue-600 mb-4">
-        Stichting Tarahum
-    </h1>
-    <p class="text-gray-600 mb-4">Your Tailwind setup is working!</p>
-    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Click me
-    </button>
-</div>
+    <div>
+        <img src="./images/tarahum-logo-white.png" alt="tarahum-logo" srcset="">
+        <p class="">
+            Stichting Tarahum – Iftar for the Fasting
+        </p>
+    </div>
+    <div class="text-center py-6 border-spacing-3">
+        <form>
+            <label for="admin">Who Are You: Admin</label>
+            <input type="checkbox" name="admin" id="admin">
+            <label for="admin">Case Manager</label>
+            <input type="checkbox" name="case-manager" id="case-manager">
+            <label for="fname">Login:</label><br>
+            <input type="text" id="fname" name="fname"><br>
+            <label for="lname">PassWord:</label><br>
+            <input type="text" id="lname" name="lname">
+            <span class="hover">Hello World</span>
+        </form>
+    </div>
 </body>
 </html>
