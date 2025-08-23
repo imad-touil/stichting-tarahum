@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stichting Tarahum</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="./images/logo.png">
+  <style>
+    :root {
+      --primary-color: #246176;
+      --accent-color: #c39b4c;
+      --white-color: #ffffff;
+    }
+    .bg-primary { background-color: var(--primary-color); }
+    .bg-accent { background-color: var(--accent-color); }
+    .text-primary { color: var(--primary-color); }
+    .text-accent { color: var(--accent-color); }
+  </style>
+</head>
+<body class="bg-white relative h-screen overflow-hidden">
+
+  <!-- Navbar -->
+  <nav class="bg-primary shadow-lg">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center text-white">
+          <img src="./images/tarahum-logo-white.png" alt="Logo" class="h-12">
+        </a>
+        <!-- Login Button -->
+        <button id="loginBtn" class="py-2 px-4 bg-accent text-white rounded-lg hover:opacity-90 transition">Login</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section (Full Screen, Centered) -->
+  <section class="flex flex-col items-center justify-center text-center h-[calc(100vh-80px)] px-4">
+    <h1 class="text-5xl md:text-6xl font-bold text-primary mb-6">Stichting Tarahum</h1>
+    <p class="text-xl md:text-2xl text-primary mb-8">” Elke daad van vriendelijkheid is liefdadigheid! “</p>
+    <img src="./images/stichting-tarahum.png" alt="Charity Illustration" 
+         class="mx-auto mb-8 w-96 md:w-[30rem] rounded-lg shadow-lg">
+    <button id="heroLoginBtn" class="px-8 py-3 rounded-lg bg-accent text-white text-lg hover:opacity-90 transition">Get Started</button>
+  </section>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-xl shadow-lg w-96 p-8 relative flex flex-col items-center">
+      <!-- Close Button -->
+      <button id="closeModal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+      
+      <h2 class="text-2xl font-bold text-primary mb-6 text-center">Login</h2>
+      
+      <form id="loginForm" class="w-full flex flex-col items-center">
+        <!-- Email -->
+        <div class="mb-4 w-full">
+          <label class="block text-gray-700 mb-2 text-sm font-semibold" for="email">Email</label>
+          <input id="email" type="email" placeholder="Enter your email"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+        </div>
+        <!-- Password -->
+        <div class="mb-4 w-full">
+          <label class="block text-gray-700 mb-2 text-sm font-semibold" for="password">Password</label>
+          <input id="password" type="password" placeholder="Enter your password"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+          <div class="mt-2 flex items-center">
+            <input type="checkbox" id="showPassword" class="mr-2"> 
+            <label for="showPassword" class="text-sm text-gray-600">Show Password</label>
+          </div>
+        </div>
+        <!-- User Type -->
+        <div class="mb-6 w-full text-center">
+          <span class="block text-gray-700 mb-2 text-sm font-semibold">Login as:</span>
+          <label class="inline-flex items-center mr-4">
+            <input type="radio" name="userType" value="admin" class="mr-2"> Admin
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="userType" value="user" class="mr-2"> Normal User
+          </label>
+        </div>
+        <!-- Submit -->
+        <button type="submit" class="w-full py-2 bg-accent text-white rounded-lg hover:opacity-90 transition">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const heroLoginBtn = document.getElementById('heroLoginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeModal = document.getElementById('closeModal');
+    const showPassword = document.getElementById('showPassword');
+    const passwordInput = document.getElementById('password');
+    const loginForm = document.getElementById('loginForm');
+
+    // Show modal
+    loginBtn.addEventListener('click', () => loginModal.classList.remove('hidden'));
+    heroLoginBtn.addEventListener('click', () => loginModal.classList.remove('hidden'));
+
+    // Close modal
+    closeModal.addEventListener('click', () => loginModal.classList.add('hidden'));
+    window.addEventListener('click', (e) => { if(e.target === loginModal) loginModal.classList.add('hidden'); });
+
+    // Show/Hide password
+    showPassword.addEventListener('change', () => {
+      passwordInput.type = showPassword.checked ? "text" : "password";
+    });
+
+    // Redirect after login
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      window.location.href = "./dashboard.html";
+    });
+  </script>
+  <footer class="bg-primary text-white text-center py-4 fixed bottom-0 left-0 w-full">
+  © 2025 Stichting Tarahum - All Rights Reserved
+</footer>
+
+</body>
+</html>
