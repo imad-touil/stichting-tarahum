@@ -21,21 +21,21 @@
 <body class="bg-white relative h-screen overflow-hidden">
 
   <!-- Navbar -->
-  <nav class="bg-primary shadow-lg">
+  <nav class="bg-primary shadow-lg h-28">
     <div class="max-w-7xl mx-auto px-4">
-      <div class="flex justify-between items-center h-20">
+      <div class="flex justify-between items-center h-full">
         <!-- Logo -->
         <a href="#" class="flex items-center text-white">
-          <img src="./images/tarahum-logo-white.png" alt="Logo" class="h-12">
+          <img src="./images/tarahum-logo-white.png" alt="Logo" class="h-20 md:h-24">
         </a>
         <!-- Login Button -->
-        <button id="loginBtn" class="py-2 px-4 bg-accent text-white rounded-lg hover:opacity-90 transition">Login</button>
+        <button id="loginBtn" class="py-3 px-6 bg-accent text-white rounded-lg hover:opacity-90 transition text-lg">Login</button>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section (Full Screen, Centered) -->
-  <section class="flex flex-col items-center justify-center text-center h-[calc(100vh-80px)] px-4">
+  <section class="flex flex-col items-center justify-center text-center h-[calc(100vh-112px)] px-4">
     <h1 class="text-5xl md:text-6xl font-bold text-primary mb-6">Stichting Tarahum</h1>
     <p class="text-xl md:text-2xl text-primary mb-8">” Elke daad van vriendelijkheid is liefdadigheid! “</p>
     <img src="./images/stichting-tarahum.png" alt="Charity Illustration" 
@@ -113,9 +113,11 @@
       window.location.href = "./dashboard.html";
     });
   </script>
+
+  <!-- Footer -->
   <footer class="bg-primary text-white text-center py-4 fixed bottom-0 left-0 w-full">
-  © 2025 Stichting Tarahum - All Rights Reserved
-</footer>
+    © 2025 Stichting Tarahum - All Rights Reserved
+  </footer>
 
 </body>
 </html>
