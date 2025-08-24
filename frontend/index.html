@@ -34,7 +34,7 @@
     </div>
   </nav>
 
-  <!-- Hero Section (Full Screen, Centered) -->
+  <!-- Hero Section -->
   <section class="flex flex-col items-center justify-center text-center h-[calc(100vh-112px)] px-4">
     <h1 class="text-5xl md:text-6xl font-bold text-primary mb-6">Stichting Tarahum</h1>
     <p class="text-xl md:text-2xl text-primary mb-8">” Elke daad van vriendelijkheid is liefdadigheid! “</p>
@@ -75,7 +75,7 @@
             <input type="radio" name="userType" value="admin" class="mr-2"> Admin
           </label>
           <label class="inline-flex items-center">
-            <input type="radio" name="userType" value="user" class="mr-2"> Normal User
+            <input type="radio" name="userType" value="case_manager" class="mr-2"> Case Manager
           </label>
         </div>
         <!-- Submit -->
@@ -107,9 +107,17 @@
       passwordInput.type = showPassword.checked ? "text" : "password";
     });
 
-    // Redirect after login
+    // Handle login
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      const role = document.querySelector('input[name="userType"]:checked')?.value;
+      if (!role) {
+        alert("Please select your role!");
+        return;
+      }
+      // Store role locally (for demo only, later use backend auth)
+      localStorage.setItem("userRole", role);
+      // Redirect
       window.location.href = "./dashboard.html";
     });
   </script>

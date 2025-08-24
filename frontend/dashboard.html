@@ -2,129 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Charity Task Management</title>
+  <title>Dashboard - Stichting Tarahum</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" type="image/png" href="./images/favicon.png">
-  <style>
-    :root {
-      --primary-color: #246176;
-      --accent-color: #c39b4c;
-      --white-color: #ffffff;
-    }
-    .bg-primary { background-color: var(--primary-color); }
-    .bg-accent { background-color: var(--accent-color); }
-    .text-primary { color: var(--primary-color); }
-    .text-accent { color: var(--accent-color); }
-  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-gray-50">
 
   <!-- Navbar -->
-  <nav class="bg-primary text-white shadow-lg px-6 py-4 flex justify-between items-center">
-    <div class="flex items-center gap-3">
-      <img src="./images/tarahum-logo-white.png" class="h-10" alt="Logo">
-      <span class="text-xl font-bold">Dashboard</span>
-    </div>
-    <button onclick="logout()" class="bg-accent px-4 py-2 rounded-lg hover:opacity-90">Logout</button>
+  <nav class="bg-primary p-4 text-white flex justify-between">
+    <h1 class="font-bold">Dashboard</h1>
+    <button onclick="logout()" class="bg-accent px-4 py-2 rounded">Logout</button>
   </nav>
 
-  <!-- Main -->
-  <main class="flex-1 p-6">
-    <!-- Admin Dashboard -->
-    <section id="adminDashboard" class="hidden">
-      <h2 class="text-2xl font-bold text-primary mb-6">Admin - Manage Tasks</h2>
+  <!-- Content -->
+  <div class="p-6">
+    <h2 class="text-2xl font-bold mb-4">Welcome to Dashboard</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <a href="beneficiaries.html" class="bg-white p-6 rounded shadow hover:shadow-lg">Manage Beneficiaries</a>
+      <a href="meals.html" class="bg-white p-6 rounded shadow hover:shadow-lg">Meals Tracking</a>
+    </div>
+  </div>
 
-      <!-- Add Task -->
-      <form id="taskForm" class="bg-white shadow rounded-lg p-4 mb-6">
-        <div class="flex gap-4">
-          <input id="taskInput" type="text" placeholder="Enter new task" 
-                 class="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
-          <button type="submit" class="bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90">Add Task</button>
-        </div>
-      </form>
-
-      <!-- Task List -->
-      <ul id="taskList" class="space-y-3">
-        <!-- Tasks will appear here -->
-      </ul>
-    </section>
-
-    <!-- Normal User Dashboard -->
-    <section id="userDashboard" class="hidden">
-      <h2 class="text-2xl font-bold text-primary mb-6">Your Assigned Tasks</h2>
-      <ul id="userTasks" class="bg-white shadow rounded-lg divide-y">
-        <li class="p-3">✅ Pickup donations from center</li>
-        <li class="p-3">✅ Deliver meals to families</li>
-        <li class="p-3">⬜ Report back to supervisor</li>
-      </ul>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::get('/admin-dashboard', function () {
-    return view('admin-dashboard');
-})->middleware('auth');
-
-Route::get('/user-dashboard', function () {
-    return view('user-dashboard');
-})->middleware('auth');
-
-  <!-- Script -->
-  <script>
-    // Get user type from login (for demo we simulate with localStorage)
-    const userType = localStorage.getItem("userType") || "user"; // "admin" or "user"
-
-    const adminDashboard = document.getElementById("adminDashboard");
-    const userDashboard = document.getElementById("userDashboard");
-
-    if (userType === "admin") {
-      adminDashboard.classList.remove("hidden");
-    } else {
-      userDashboard.classList.remove("hidden");
-    }
-
-    // Task Management (Admin only)
-    const taskForm = document.getElementById("taskForm");
-    const taskInput = document.getElementById("taskInput");
-    const taskList = document.getElementById("taskList");
-
-    taskForm?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const taskText = taskInput.value.trim();
-      if (!taskText) return;
-
-      const li = document.createElement("li");
-      li.className = "bg-white shadow p-3 flex justify-between items-center rounded-lg";
-      li.innerHTML = `
-        <span>${taskText}</span>
-        <button class="text-red-500 hover:text-red-700">Delete</button>
-      `;
-
-      // Delete button
-      li.querySelector("button").addEventListener("click", () => li.remove());
-
-      taskList.appendChild(li);
-      taskInput.value = "";
-    });
-
-    // Logout
-    function logout() {
-      localStorage.removeItem("userType");
-      window.location.href = "./index.html";
-    }
-  </script>
+<script src="./js/main.js"></script>
 </body>
 </html>
