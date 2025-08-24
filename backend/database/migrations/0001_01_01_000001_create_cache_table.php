@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cache', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->mediumText('value');
-            $table->integer('expiration');
-        });
-
-        Schema::create('cache_locks', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->string('owner');
-            $table->integer('expiration');
-        });
+        // If you already have the users table, skip creating it
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('email')->unique();
+                $table->string('password');
+                $table->enum('role', ['admin','case_manager'])->default('case_manager');
+                $table->timestamp('created_at')->useCurrent();
+                // No updated_at because your existing table doesn't have it
+            });
+        }
     }
 
     /**
@@ -29,7 +30,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cache');
-        Schema::dropIfExists('cache_locks');
+        // Only drop users table if it exists
+        if (Schema::hasTable('users')) {
+            Schema::dropIfExists('users');
+        }
     }
 };
