@@ -27,3 +27,163 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Stichting Tarahum</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1B4332',
+            accent: '#FF7A00'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-primary shadow-lg">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <img src="./images/tarahum-logo-white.png" alt="Logo" class="h-12">
+          <h1 class="text-white text-xl font-bold ml-4">Admin Dashboard</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span id="userInfo" class="text-white"></span>
+          <button id="logoutBtn" class="py-2 px-4 bg-accent text-white rounded-lg hover:opacity-90 transition">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto py-8 px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <!-- Stats Cards -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Users</h3>
+        <p class="text-3xl font-bold text-primary">24</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Active Projects</h3>
+        <p class="text-3xl font-bold text-accent">8</p>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Donations</h3>
+        <p class="text-3xl font-bold text-green-600">€5,240</p>
+      </div>
+    </div>
+
+    <!-- Management Sections -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- User Management -->
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-xl font-bold text-gray-800">User Management</h2>
+        </div>
+        <div class="p-6">
+          <p class="text-gray-600 mb-4">Manage users and their roles</p>
+          <button class="bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
+            View Users
+          </button>
+        </div>
+      </div>
+
+      <!-- Project Management -->
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-xl font-bold text-gray-800">Project Management</h2>
+        </div>
+        <div class="p-6">
+          <p class="text-gray-600 mb-4">Create and manage charity projects</p>
+          <button class="bg-accent text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
+            View Projects
+          </button>
+        </div>
+      </div>
+
+      <!-- Donation Tracking -->
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-xl font-bold text-gray-800">Donations</h2>
+        </div>
+        <div class="p-6">
+          <p class="text-gray-600 mb-4">Track and manage donations</p>
+          <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
+            View Donations
+          </button>
+        </div>
+      </div>
+
+      <!-- Reports -->
+      <div class="bg-white rounded-lg shadow">
+        <div class="p-6 border-b">
+          <h2 class="text-xl font-bold text-gray-800">Reports</h2>
+        </div>
+        <div class="p-6">
+          <p class="text-gray-600 mb-4">Generate financial and activity reports</p>
+          <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
+            View Reports
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Check if user is admin
+    async function checkAdminAuth() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/user", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.user.role !== 'admin') {
+            alert('Access denied. Admin role required.');
+            window.location.href = 'index.html';
+            return;
+          }
+          
+          // Update user info
+          document.getElementById('userInfo').textContent = `Welcome, ${data.user.name}`;
+        } else {
+          window.location.href = 'index.html';
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        window.location.href = 'index.html';
+      }
+    }
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/logout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+        });
+        
+        window.location.href = 'index.html';
+      } catch (error) {
+        window.location.href = 'index.html';
+      }
+    });
+
+    // Check auth on page load
+    checkAdminAuth();
+  </script>
+</body>
+</html>

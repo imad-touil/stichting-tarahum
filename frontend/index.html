@@ -116,6 +116,85 @@
         const data = await response.json();
 
         if (response.ok) {
+          // Login successful
+          alert(`Welcome ${data.name}! Role: ${data.role}`);
+          loginModal.classList.add('hidden');
+          
+          // Redirect based on role
+          if (data.role === 'admin') {
+            window.location.href = 'dashboard.html';
+          } else {
+            // Update UI for logged in user
+            updateUIForLoggedInUser(data);
+          }
+        } else {
+          // Login failed
+          alert(data.error || 'Login failed');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Network error. Please try again.');
+      }
+    });
+
+    // Function to update UI for logged in user
+    function updateUIForLoggedInUser(userData) {
+      // Hide login buttons
+      loginBtn.style.display = 'none';
+      heroLoginBtn.style.display = 'none';
+      
+      // Show user info
+      const navbar = document.querySelector('nav .flex');
+      const userInfo = document.createElement('div');
+      userInfo.className = 'text-white flex items-center space-x-4';
+      userInfo.innerHTML = `
+        <span>Welcome, ${userData.name}</span>
+        <button id="logoutBtn" class="py-2 px-4 bg-red-500 text-white rounded-lg hover:opacity-90 transition">Logout</button>
+      `;
+      navbar.appendChild(userInfo);
+      
+      // Add logout functionality
+      document.getElementById('logoutBtn').addEventListener('click', logout);
+    }
+
+    // Logout function
+    async function logout() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/logout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" }
+        });
+        
+        if (response.ok) {
+          location.reload();
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+        location.reload();
+      }
+    }
+
+    // Check if user is already logged in
+    async function checkAuthStatus() {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/user", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          updateUIForLoggedInUser(data.user);
+        }
+      } catch (error) {
+        // User not logged in
+      }
+    }
+
+    // Check auth status on page load
+    checkAuthStatus();
+
+        if (response.ok) {
           localStorage.setItem("userRole", data.role);
           window.location.href = "./dashboard.html";
         } else {
