@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NFC UID Reader</title>
+</head>
+<body>
+  <h1>NFC Reader</h1>
+  <p>Card UID: <span id="uids">Waiting...</span></p>
+
+  <script>
+    async function fetchUID() {
+      try {
+        const response = await fetch("/get_uid");
+        const data = await response.json();
+        if (data.uid) {
+          document.getElementById("uids").innerText = data.uid;
+        } else {
+          document.getElementById("uids").innerText = "No card detected";
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Refresh UID every second
+    setInterval(fetchUID, 1000);
+  </script>
+</body>
+</html>
