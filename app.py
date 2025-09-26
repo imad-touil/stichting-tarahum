@@ -51,3 +51,5 @@ if __name__ == "__main__":
     t = threading.Thread(target=nfc_reader, daemon=True)
     t.start()
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+
