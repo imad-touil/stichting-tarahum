@@ -11,7 +11,7 @@ def nfc_reader():
     global latest_uid
     r = readers()
     if len(r) == 0:
-        print("❌ No NFC readers found")
+        print("No NFC readers found")
         return
 
     reader = r[0]
@@ -31,7 +31,7 @@ def nfc_reader():
                 uid = toHexString(response).replace(" ", "")
                 if uid != last_uid:
                     latest_uid = uid
-                    print(f"🎯 New card detected! UID: {uid}")
+                    print(f"New card detected! UID: {uid}")
                     last_uid = uid
 
             connection.disconnect()
