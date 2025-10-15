@@ -1,0 +1,6 @@
+------------------------------------
+now i add a script that read nfc cards;
+TODO: understand it and the library that used;
+TODO: how to send that UID to the background
+TODO: How To create multiple users and managed them
+------------------------------------
